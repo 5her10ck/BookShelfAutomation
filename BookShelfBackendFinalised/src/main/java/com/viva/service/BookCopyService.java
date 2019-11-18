@@ -58,7 +58,10 @@ public class BookCopyService {
 	}
 
 	public void deleteBookCopy(String id) {
+		if(bookCopyRepository.existsById(id))
 		bookCopyRepository.deleteById(id);
+		else
+			logger.error("Subbook with ID not found!");
 	}
 
 	@Transactional
@@ -123,7 +126,7 @@ public class BookCopyService {
 			Iterator<String> iterator = bookCopiesIssued.iterator();
 			while (iterator.hasNext()) {
 				BookCopy issuedCopy = bookCopyRepository.findById(iterator.next()).get();
-				if (Integer.parseInt(issuedCopy.getSubBookId().substring(0, 4)) == bookId) {
+				if (Integer.parseInt(issuedCopy.getSubBookId().substring(0, Integer.toString(bookId).length())) == bookId) {
 					setReturnData(issuer, bookCopiesIssued, issuedCopy, bookId);
 					flag = false;
 					break;

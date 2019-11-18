@@ -37,7 +37,6 @@ public class MemberService {
 			member.setMemberPassword(Hasher.hashingFunction(member.getMemberPassword()));
 			member.setWishedBooksAvailable(new ArrayList<Integer>());
 			member.setBookCopyIssued(new ArrayList<String>());
-			member.setSuspended(false);
 			memberRepository.save(member);
 		} catch (Exception e) {
 			logger.error("Email Already in Use!");
@@ -66,17 +65,14 @@ public class MemberService {
 	}
 
 	public void deleteMember(int id) {
+		if(memberRepository.existsById(id))
 		memberRepository.deleteById(id);
+		else
+			logger.error("Invalid ID!");
 	}
 
 	public Member getMemberByEmail(String email) {
 		return memberRepository.getMemberByMemberEmail(email);
-	}
-
-	public boolean memberValidation(Member member) throws NoSuchAlgorithmException {
-		Member memberFromDb = getMemberByEmail(member.getMemberEmail());
-		String hashedPassword = Hasher.hashingFunction(member.getMemberPassword());
-		return hashedPassword.equals(memberFromDb.getMemberPassword());
 	}
 
 	public Member validatedMember(Member member) throws NoSuchAlgorithmException {
@@ -91,22 +87,15 @@ public class MemberService {
 		return null;
 	}
 
-	public Member getValidation(Member member) {
+	public Member getValidation(Member member) throws NoSuchAlgorithmException {
 		if (getMemberByEmail(member.getMemberEmail()) == null) {
 			logger.error("Email ID : " + member.getMemberEmail() + " not registered as Member!");
 			return null;
 		} else {
-			try {
+
 				logger.info("Member validation post request for Member : "
 						+ getMemberByEmail(member.getMemberEmail()).getMemberId());
-				return validatedMember(member);
-			} catch (NoSuchAlgorithmException e) {
-				logger.error("Member validation request failed for Member :"
-						+ getMemberByEmail(member.getMemberEmail()).getMemberId());
-				logger.error(e.getMessage());
-				logger.error("Context : ", e);
-				return null;
-			}
+				return validatedMember(member);		
 		}
 	}
 }

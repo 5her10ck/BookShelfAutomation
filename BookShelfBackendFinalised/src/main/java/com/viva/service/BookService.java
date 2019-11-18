@@ -51,19 +51,8 @@ public class BookService {
 
 	public void updateBook(Book book, int id) {
 		if (bookRepository.findById(id).isPresent()) {
-			if (book.getBookAuthor() == null)
-				book.setBookAuthor(getBookById(id).getBookAuthor());
-			if (book.getBookGenre() == null)
-				book.setBookGenre(getBookById(id).getBookGenre());
-			if (book.getBookPrice() == 0)
-				book.setBookPrice(getBookById(id).getBookPrice());
-			if (book.getBookPublisher() == null)
-				book.setBookPublisher(getBookById(id).getBookPublisher());
-			if (book.getBookTitle() == null)
-				book.setBookTitle(getBookById(id).getBookTitle());
-			if (book.getIsAvailable() == null)
-				book.setIsAvailable(getBookById(id).getIsAvailable());
-
+			setOldData(book,id);
+			
 			if (book.getBookQuantity() != bookRepository.findById(id).get().getBookQuantity()) {
 				for (int i = 0; i < bookRepository.findById(id).get().getBookQuantity(); i++)
 					bookCopyService.removeBookCopy(id, i + 1);
@@ -73,8 +62,23 @@ public class BookService {
 
 			book.setBookId(id);
 			bookRepository.save(book);
-		} else
+		} else		
 			logger.error("Book with this ID does not Exists!");
+	}
+	
+	public void setOldData(Book book,int id) {
+		if (book.getBookAuthor() == null)
+			book.setBookAuthor(getBookById(id).getBookAuthor());
+		if (book.getBookGenre() == null)
+			book.setBookGenre(getBookById(id).getBookGenre());
+		if (book.getBookPrice() == 0)
+			book.setBookPrice(getBookById(id).getBookPrice());
+		if (book.getBookPublisher() == null)
+			book.setBookPublisher(getBookById(id).getBookPublisher());
+		if (book.getBookTitle() == null)
+			book.setBookTitle(getBookById(id).getBookTitle());
+		if (book.getIsAvailable() == null)
+			book.setIsAvailable(getBookById(id).getIsAvailable());
 	}
 
 	public void deleteBook(int id) {

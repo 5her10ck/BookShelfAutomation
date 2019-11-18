@@ -53,22 +53,14 @@ public class AdminService {// Service Layer for Admin
 		return null;
 	}
 
-	public Admin getValidation(Admin admin) {
+	public Admin getValidation(Admin admin) throws NoSuchAlgorithmException {
 		if (getAdminByEmail(admin.getAdminEmail()) == null) {
 			logger.error("Email ID : " + admin.getAdminEmail() + " not registered as Admin!");
 			return null;
 		} else {
-			try {
 				logger.info("Admin validation post request for Admin : "
 						+ getAdminByEmail(admin.getAdminEmail()).getAdminId());
-				return validatedAdmin(admin);
-			} catch (NoSuchAlgorithmException e) {
-				logger.error("Admin validation request failed for Admin :"
-						+ getAdminByEmail(admin.getAdminEmail()).getAdminId());
-				logger.error(e.getMessage());
-				logger.error("Context : ", e);
-				return null;
-			}
+				return validatedAdmin(admin);			
 		}
 	}
 }

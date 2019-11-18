@@ -3,7 +3,6 @@ package com.viva.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -50,10 +49,6 @@ public class WishListService {
 		return wishes;
 	}
 
-	public Optional<WishList> getWishById(int id) {
-		return wishListRepository.findById(id);
-	}
-
 	public List<WishList> getAllWishes() {
 		return (List<WishList>) wishListRepository.findAll();
 	}
@@ -74,7 +69,10 @@ public class WishListService {
 		
 
 	public void deleteWish(int id) {
+		if(wishListRepository.existsById(id))
 		wishListRepository.deleteById(id);
+		else
+			logger.error("Invalid Wish ID!");
 	}
 
 	public WishList getWishByMemberIdAndId(int memberId, int id) {

@@ -54,7 +54,7 @@ public class MemberController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/memberlogin")
-	public Member memberLogin(@RequestBody Member member) {
+	public Member memberLogin(@RequestBody Member member) throws NoSuchAlgorithmException {
 		return memberService.getValidation(member);
 	}
 

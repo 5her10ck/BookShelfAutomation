@@ -61,8 +61,8 @@ public class BookCopyController {
 	}
 
 	@RequestMapping("/members/{memberId}/return/{bookId}")
-	public void returnBook(@PathVariable int memberId, @PathVariable int bookId) throws IOException {		
-		bookCopyService.returnBook(memberId, bookId);				
+	public int returnBook(@PathVariable int memberId, @PathVariable int bookId) throws IOException {		
+		return bookCopyService.returnBook(memberId, bookId);				
 	}
 
 }

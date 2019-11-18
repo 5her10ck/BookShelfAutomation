@@ -38,7 +38,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/adminlogin")
-	public Admin adminLogin(@RequestBody Admin admin) {
+	public Admin adminLogin(@RequestBody Admin admin) throws NoSuchAlgorithmException {
 		return adminService.getValidation(admin);
 	}
 }

@@ -64,6 +64,7 @@ public class WishListController {
 	public void deleteWish(@PathVariable int id) {
 		wishListService.deleteWish(id);
 	}
+	
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/members/{memberId}/wishlist/{id}")
 	public void deleteWishByMember(@PathVariable int id, @PathVariable int memberId) {

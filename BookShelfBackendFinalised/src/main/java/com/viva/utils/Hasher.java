@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Scanner;
 
 import com.viva.BookShelfAutomation;
 
@@ -13,15 +12,6 @@ public class Hasher {
 	public static final String SALT = "mfs-ggn-bookshelf";
 	
 	static ShelfLogger logger = new ShelfLogger(BookShelfAutomation.class);
-
-	public static void main(String[] args) throws NoSuchAlgorithmException {// Main function to hash the string through
-																			// console
-		Scanner scanner = new Scanner(System.in);
-		logger.info("Enter string: \n");
-		String consoleInput = scanner.nextLine();
-		logger.info(hashingFunction(consoleInput));
-		scanner.close();
-	}
 
 	public static String hashingFunction(String originalPassword) throws NoSuchAlgorithmException {// Returns the
 																									// hexadecimal
